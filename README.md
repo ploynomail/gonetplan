@@ -1,0 +1,1 @@
+linux netplan config
