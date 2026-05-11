@@ -127,7 +127,14 @@ func (np *NetPlanConfig) createTargetConfig() error {
 		return err
 	}
 	files = OrderFiles(files)
-	var nc netplan.Network = netplan.Network{}
+	var nc netplan.Network = netplan.Network{
+		Network: &netplan.NetworkConfig{
+			Ethernets: make(map[string]*netplan.Ethernet),
+			Bonds:     make(map[string]*netplan.Bond),
+			Bridges:   make(map[string]*netplan.Bridge),
+			VLANs:     make(map[string]*netplan.VLAN),
+		},
+	}
 	for _, file := range files {
 		netplanConfig, err := os.ReadFile(file)
 		if err != nil {
